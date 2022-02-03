@@ -17,11 +17,8 @@ export class AuthService {
     }
 
     public async userRegistration(authDto: UsersDto) {
-        console.log("___________2", authDto);
-        
         const candidate = await this.usersService.getUserByEmail(authDto.email);
-        console.log("___________3", candidate);
-        
+ 
         if (candidate) {
           throw new HttpException('This user already exists', HttpStatus.BAD_REQUEST);
         } else {
@@ -45,7 +42,6 @@ export class AuthService {
         return { token: this.jwtService.sign(payload) }
     }  
     private async validateUserData(authUserDto: AuthDto) {
-        console.log("___________1", authUserDto);
         const user = await this.usersService.getUserByEmail(authUserDto.email);
         const passwordsIsEqual = await bcrypt.compare(authUserDto.password, user.password);
         if (user && passwordsIsEqual) {

@@ -5,6 +5,7 @@ import { Users } from './model/users.model';
 
 @Injectable()
 export class UsersService {
+    //1-администратор 2-ОМА 3-ОМТСиК
     private availableUsers: Array<string> = ['Admin'];
     
     constructor(@InjectModel(Users) private userRepository: typeof Users) {}
