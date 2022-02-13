@@ -3,6 +3,8 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { Users } from './users/model/users.model';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { ProductModule } from './product/product.module';
+import { Product } from './product/model/product.model';
 
 @Module({
   imports: [
@@ -13,10 +15,10 @@ import { AuthModule } from './auth/auth.module';
       username: 'postgres',
       password: 'QwQ12345_q',
       database: 'warehouse',
-      models: [Users],
+      models: [Users, Product],
       autoLoadModels: true
     }),    
-    UsersModule, AuthModule],
+    UsersModule, AuthModule, ProductModule],
   controllers: [],
   providers: [],
 })
