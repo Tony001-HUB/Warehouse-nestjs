@@ -6,4 +6,5 @@ export class ProductDto {
     counter: number;
     shelving: string;
     shelf: string;
+    unaccounted?: string;
 }

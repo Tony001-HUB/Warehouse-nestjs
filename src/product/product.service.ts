@@ -7,11 +7,19 @@ import { Product } from './model/product.model';
 export class ProductService {
     constructor(@InjectModel(Product) private productRepository: typeof Product) {}
 
-    public async getAllNews() {
+    public async getAllProducts() {
         return await this.productRepository.findAll();
     }
 
     public async createProduct(productDto: ProductDto) {
         return await this.productRepository.create(productDto);
+    }
+
+    public async deleteProductById(productId: number) {
+        return await this.productRepository.destroy({where: {productId: +productId}});
+    }
+
+    public async getProductById(productId: number) {
+        return await this.productRepository.findOne({where: {productId: +productId}})
     }
 }
