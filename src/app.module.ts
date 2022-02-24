@@ -5,6 +5,8 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ProductModule } from './product/product.module';
 import { Product } from './product/model/product.model';
+import { AcquisitionModule } from './acquisition/acquisition.module';
+import { Acquisition } from './acquisition/model/acquisition.model';
 
 @Module({
   imports: [
@@ -15,10 +17,10 @@ import { Product } from './product/model/product.model';
       username: 'postgres',
       password: 'QwQ12345_q',
       database: 'warehouse',
-      models: [Users, Product],
+      models: [Users, Product, Acquisition],
       autoLoadModels: true
     }),    
-    UsersModule, AuthModule, ProductModule],
+    UsersModule, AuthModule, ProductModule, AcquisitionModule],
   controllers: [],
   providers: [],
 })

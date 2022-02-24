@@ -22,4 +22,8 @@ export class ProductService {
     public async getProductById(productId: number) {
         return await this.productRepository.findOne({where: {productId: +productId}})
     }
+
+    public async getProductByTitle(title: string) {
+        return await this.productRepository.findAll({where: {title: title}})
+    }
 }

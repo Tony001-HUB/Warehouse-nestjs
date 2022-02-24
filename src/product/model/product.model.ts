@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import {  BelongsToMany, Column, DataType, Model, Table } from "sequelize-typescript";
+import { arrayBuffer } from "stream/consumers";
 
 interface IProductCreationAttrs {
     title: string;
