@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ProductDto } from './dto/product.dto';
 import { ProductService } from './product.service';
 
@@ -26,7 +26,7 @@ export class ProductController {
       return this.productService.getProductById(+id);
     }
 
-    @Post() 
+    @Put() 
     public getProductInStock(@Body() prodArr: ProductDto) {
       return this.productService.getProductInStock(prodArr);
     }
