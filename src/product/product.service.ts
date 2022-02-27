@@ -26,4 +26,8 @@ export class ProductService {
     public async getProductByTitle(title: string) {
         return await this.productRepository.findAll({where: {title: title}})
     }
+
+    public async getProductInStock(prodArr: ProductDto) {
+        return await this.productRepository.findAll({where: {title: [prodArr]}})
+    }
 }
