@@ -8,21 +8,26 @@ export class ProductController {
 
     @Get()
     public getAllProducts() {
-        return this.productService.getAllProducts();
+    return this.productService.getAllProducts();
     }
 
     @Post()
     public createProduct(@Body() productDto: ProductDto) {
-        return this.productService.createProduct(productDto);
+      return this.productService.createProduct(productDto);
     }
 
     @Delete('/:id')
     public deleteProduct(@Param('id') id: string) {
-        return this.productService.deleteProductById(+id);
+      return this.productService.deleteProductById(+id);
     }
 
     @Get('/:id')
     public getProductById(@Param('id') id: string) {
-        return this.productService.getProductById(+id);
+      return this.productService.getProductById(+id);
+    }
+
+    @Post() 
+    public getProductInStock(@Body() prodArr: ProductDto) {
+      return this.productService.getProductInStock(prodArr);
     }
 }
