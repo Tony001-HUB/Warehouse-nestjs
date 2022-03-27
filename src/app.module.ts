@@ -18,6 +18,7 @@ import { Acquisition } from './acquisition/model/acquisition.model';
       password: 'QwQ12345_q',
       database: 'warehouse',
       models: [Users, Product, Acquisition],
+<<<<<<< HEAD
       autoLoadModels: true,
     }),
     UsersModule,
@@ -25,6 +26,11 @@ import { Acquisition } from './acquisition/model/acquisition.model';
     ProductModule,
     AcquisitionModule,
   ],
+=======
+      autoLoadModels: true
+    }),    
+    UsersModule, AuthModule, ProductModule, AcquisitionModule],
+>>>>>>> 1efde9d5eb10719d158a4cd80e2df4ac813b5786
   controllers: [],
   providers: [],
 })

@@ -2,7 +2,6 @@ import { Body, Injectable, Post } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { ProductDto } from './dto/product.dto';
 import { Product } from './model/product.model';
-import { Observable } from "rxjs";
 
 @Injectable()
 export class ProductService {

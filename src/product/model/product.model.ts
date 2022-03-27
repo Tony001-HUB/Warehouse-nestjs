@@ -3,11 +3,19 @@ import {  BelongsToMany, Column, DataType, Model, Table } from "sequelize-typesc
 import { arrayBuffer } from "stream/consumers";
 
 interface IProductCreationAttrs {
+<<<<<<< HEAD
     title?: string;
     productId?: number;
     counter?: number;
     shelving?: string;
     shelf?: string;
+=======
+    title: string;
+    productId: number;
+    counter: number;
+    shelving: string;
+    shelf: string;
+>>>>>>> 1efde9d5eb10719d158a4cd80e2df4ac813b5786
 }
 
 @Table({tableName: 'product'})
