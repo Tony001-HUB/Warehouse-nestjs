@@ -1,12 +1,15 @@
 import { Body, Injectable, Post } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { Op } from 'sequelize';
 import { ProductDto } from './dto/product.dto';
 import { Product } from './model/product.model';
+import { IncompleteProduct } from "./model/incompleteProduct.model";
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectModel(Product) private productRepository: typeof Product,
+    @InjectModel(IncompleteProduct) private incompleteProductRepository: typeof IncompleteProduct,
   ) {}
 
   public async getAllProducts() {
@@ -39,11 +42,17 @@ export class ProductService {
     });
   }
 
-  public async generateReport(idArray: string[]) {
+  public async generateReport(data: {count: number, title: string}[]) {
     return await this.productRepository.findAll({
       where: {
-        productId: idArray,
+        title: {
+          [Op.or]: data.map(obj => obj.title)
+        }
       },
     });
+  }
+
+  public async addIncompleteProduct(incompleteProductDto: ProductDto[]) {
+    return await this.incompleteProductRepository.bulkCreate(incompleteProductDto);
   }
 }
