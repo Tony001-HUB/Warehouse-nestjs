@@ -10,6 +10,10 @@ export class ProductReportController {
     return this.productService.getIncompleteProduct();
   }
 
+  @Get('/full-product')
+  public getAllFullProduct() {
+    return this.productService.getFullProduct();
+  }
 
   @Post()
   public generateReport(@Body() idArray: {count: number, title: string}[]) {
