@@ -25,6 +25,13 @@ export class ProductController {
     return this.productService.createProduct(productDto);
   }
 
+  /*
+  @Post("/test")
+  public createProduct1(@Body() productDto: ProductDto) {
+    return this.productService.createProduct(productDto);
+  }
+   */
+
   @Delete('/:id')
   public deleteProduct(@Param('id') id: string) {
     return this.productService.deleteProductById(+id);
@@ -34,6 +41,13 @@ export class ProductController {
   public getProductById(@Param('id') id: string) {
     return this.productService.getProductById(+id);
   }
+
+  /*
+  @Get('/by/title/:title')
+  public getProductById1(@Param('title') id: string) {
+    return this.productService.getProductById(+id);
+  }
+   */
 
   @Put()
   public getProductInStock(@Body() prodArr: ProductDto) {

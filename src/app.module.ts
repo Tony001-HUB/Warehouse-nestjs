@@ -8,6 +8,7 @@ import { Product } from './product/model/product.model';
 import { AcquisitionModule } from './acquisition/acquisition.module';
 import { Acquisition } from './acquisition/model/acquisition.model';
 import { IncompleteProduct } from "./product/model/incompleteProduct.model";
+import { FullProduct } from './product/model/fullProduct.model';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { IncompleteProduct } from "./product/model/incompleteProduct.model";
       username: 'postgres',
       password: 'QwQ12345_q',
       database: 'warehouse',
-      models: [Users, Product, Acquisition, IncompleteProduct],
+      models: [Users, Product, Acquisition, IncompleteProduct, FullProduct],
       autoLoadModels: true,
     }),
     UsersModule,

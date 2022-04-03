@@ -8,8 +8,8 @@ interface IProductCreationAttrs {
   shelf?: string;
 }
 
-@Table({tableName: 'incompleteProduct'})
-export class IncompleteProduct extends Model<IncompleteProduct, IProductCreationAttrs> {
+@Table({tableName: 'fullProduct'})
+export class FullProduct extends Model<FullProduct, IProductCreationAttrs> {
 
   @Column({type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
   id: number;
@@ -32,9 +32,9 @@ export class IncompleteProduct extends Model<IncompleteProduct, IProductCreation
   @Column({type: DataType.STRING})
   unaccounted: string;
 
-  @Column({type: DataType.STRING, allowNull: true, unique: true})
+  @Column({type: DataType.STRING, allowNull: true})
   transactionId: string;
 
-  @Column({type: DataType.INTEGER})
+  @Column({type: DataType.INTEGER, allowNull: true})
   insufficiency: number;
 }
