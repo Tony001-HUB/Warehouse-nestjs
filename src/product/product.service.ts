@@ -58,6 +58,10 @@ export class ProductService {
     return await this.incompleteProductRepository.bulkCreate(incompleteProductDto);
   }
 
+  public async getIncompleteProduct() {
+    return await this.incompleteProductRepository.findAll();
+  }
+
   public async addFullProduct(fullProductDto: ProductDto[]) {
     console.log("[...fullProductDto, ...incompleteProductDto]", fullProductDto);
     return await this.fullProductRepository.bulkCreate(fullProductDto);

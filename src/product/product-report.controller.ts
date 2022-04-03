@@ -1,9 +1,15 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from "@nestjs/common";
 import { ProductService } from './product.service';
 
 @Controller('product-report')
 export class ProductReportController {
   constructor(private productService: ProductService) {}
+
+  @Get()
+  public getAllIncompleteProducts() {
+    return this.productService.getIncompleteProduct();
+  }
+
 
   @Post()
   public generateReport(@Body() idArray: {count: number, title: string}[]) {
