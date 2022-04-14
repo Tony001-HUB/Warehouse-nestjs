@@ -55,6 +55,7 @@ export class ProductService {
   }
 
   public async addIncompleteProduct(incompleteProductDto: ProductDto[]) {
+    console.log("incompleteProductDto",incompleteProductDto);
     return await this.incompleteProductRepository.bulkCreate(incompleteProductDto);
   }
 

@@ -32,7 +32,7 @@ export class IncompleteProduct extends Model<IncompleteProduct, IProductCreation
   @Column({type: DataType.STRING})
   unaccounted: string;
 
-  @Column({type: DataType.STRING, allowNull: true, unique: true})
+  @Column({type: DataType.STRING, allowNull: false})
   transactionId: string;
 
   @Column({type: DataType.INTEGER})

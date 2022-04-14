@@ -27,7 +27,7 @@ export class ProductReportController {
 
   @Post()
   public generateReport(@Body() idArray: {count: number, title: string}[]) {
-    let transactionId = this.productService.generateId(45);
+    let transactionId = this.productService.generateId(30);
     let fullArr = [];
     let incompleteCounterArr = [];
     return this.productService.generateReport(idArray).then(res => {
@@ -47,8 +47,17 @@ export class ProductReportController {
       }
     })
       .then(res => {
-        this.productService.addIncompleteProduct(incompleteCounterArr.map(data => data.dataValues))
-        this.productService.addFullProduct([...fullArr.map(data => data.dataValues), ...incompleteCounterArr.map(data => data.dataValues)]);
+        setTimeout(() => {
+          console.log("_________________",incompleteCounterArr);
+          this.productService.addIncompleteProduct(
+            incompleteCounterArr.map(data => data.dataValues))
+            .then();
+          this.productService.addFullProduct(
+            [...fullArr.map(data => data.dataValues), ...incompleteCounterArr.map(data => data.dataValues)])
+            .then();
+
+          return true;
+        }, 0);
       })
       .then(res => ([{type: "full", data: [...fullArr, ...incompleteCounterArr]}, {type: "incomplete", data: [...incompleteCounterArr]}]));
   }
