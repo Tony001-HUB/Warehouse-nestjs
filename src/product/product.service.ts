@@ -62,12 +62,20 @@ export class ProductService {
     return await this.incompleteProductRepository.findAll();
   }
 
+  public async getIncompleteProductByTransactionId(id: string) {
+    return await this.incompleteProductRepository.findAll({ where: { transactionId: id } });
+  }
+
   public async addFullProduct(fullProductDto: ProductDto[]) {
     return await this.fullProductRepository.bulkCreate(fullProductDto);
   }
 
   public async getFullProduct() {
     return await this.fullProductRepository.findAll();
+  }
+
+  public async getFullProductByTransactionId(id: string) {
+    return await this.fullProductRepository.findAll({ where: { transactionId: id } });
   }
 
   public generateId(len): string {

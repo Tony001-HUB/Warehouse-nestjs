@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { ProductService } from './product.service';
 
 @Controller('product-report')
@@ -13,6 +13,16 @@ export class ProductReportController {
   @Get('/full-product')
   public getAllFullProduct() {
     return this.productService.getFullProduct();
+  }
+
+  @Get('/full/:transactionId')
+  public getFullProductByTransactionId(@Param('transactionId') transactionId: string) {
+    return this.productService.getFullProductByTransactionId(transactionId);
+  }
+
+  @Get('/incomplete/:transactionId')
+  public getIncompleteProductByTransactionId(@Param('transactionId') transactionId: string) {
+    return this.productService.getIncompleteProductByTransactionId(transactionId);
   }
 
   @Post()
