@@ -47,12 +47,12 @@ export class ProductReportController {
 
         for (let i = 0; i < idArray.length; i++) {
           for (let x = 0; x < promiseGenerateReport.length; x++) {
-            if (idArray[i].title.toLowerCase() === promiseGenerateReport[x].title.toLowerCase() && idArray[i].count >= promiseGenerateReport[x].counter) {
+            if (idArray[i].title === promiseGenerateReport[x].title && idArray[i].count >= promiseGenerateReport[x].counter) {
               promiseGenerateReport[x]['dataValues']['transactionId'] = transactionId;
               promiseGenerateReport[x]['dataValues']['insufficiency'] = idArray[i].count - promiseGenerateReport[x].counter;
               incompleteCounterArr.push(promiseGenerateReport[x]);
             }
-            if (idArray[i].title.toLowerCase() === promiseGenerateReport[x].title.toLowerCase() && idArray[i].count < promiseGenerateReport[x].counter) {
+            if (idArray[i].title === promiseGenerateReport[x].title && idArray[i].count < promiseGenerateReport[x].counter) {
               promiseGenerateReport[x]['dataValues']['transactionId'] = transactionId;
               promiseGenerateReport[x]['dataValues']['insufficiency'] = 0;
               fullArr.push(promiseGenerateReport[x]);
