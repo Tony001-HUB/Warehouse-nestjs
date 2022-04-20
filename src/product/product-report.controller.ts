@@ -42,17 +42,17 @@ export class ProductReportController {
     return Promise.all([this.productService.generateReport(idArray), this.productService.getAllProducts()])
       .then(values => {
         const [promiseGenerateReport, promiseGetAllProducts] = values;
-        goodsDoNotExist = idArray.filter(({ title: titleF }) => !promiseGetAllProducts.some(({ title: titleS }) => titleF === titleS));
+        goodsDoNotExist = idArray.filter(({ title: titleF }) => !promiseGetAllProducts.some(({ title: titleS }) => titleF.toLowerCase() === titleS.toLowerCase()));
 
 
         for (let i = 0; i < idArray.length; i++) {
           for (let x = 0; x < promiseGenerateReport.length; x++) {
-            if (idArray[i].title === promiseGenerateReport[x].title && idArray[i].count >= promiseGenerateReport[x].counter) {
+            if (idArray[i].title.toLowerCase() === promiseGenerateReport[x].title.toLowerCase() && idArray[i].count >= promiseGenerateReport[x].counter) {
               promiseGenerateReport[x]['dataValues']['transactionId'] = transactionId;
               promiseGenerateReport[x]['dataValues']['insufficiency'] = idArray[i].count - promiseGenerateReport[x].counter;
               incompleteCounterArr.push(promiseGenerateReport[x]);
             }
-            if (idArray[i].title === promiseGenerateReport[x].title && idArray[i].count < promiseGenerateReport[x].counter) {
+            if (idArray[i].title.toLowerCase() === promiseGenerateReport[x].title.toLowerCase() && idArray[i].count < promiseGenerateReport[x].counter) {
               promiseGenerateReport[x]['dataValues']['transactionId'] = transactionId;
               promiseGenerateReport[x]['dataValues']['insufficiency'] = 0;
               fullArr.push(promiseGenerateReport[x]);
