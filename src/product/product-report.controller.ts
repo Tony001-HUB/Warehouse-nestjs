@@ -42,7 +42,7 @@ export class ProductReportController {
     return Promise.all([this.productService.generateReport(idArray), this.productService.getAllProducts()])
       .then(values => {
         const [promiseGenerateReport, promiseGetAllProducts] = values;
-        goodsDoNotExist = idArray.filter(({ title: titleF }) => !promiseGetAllProducts.some(({ title: titleS }) => titleF.toLowerCase() === titleS.toLowerCase()));
+        goodsDoNotExist = idArray.filter(({ title: titleF }) => !promiseGetAllProducts.some(({ title: titleS }) => titleF === titleS));
 
 
         for (let i = 0; i < idArray.length; i++) {
@@ -61,7 +61,7 @@ export class ProductReportController {
         }
       })
       .then(res => ([
-      {type: "full", data: [...fullArr, ...incompleteCounterArr]},
+      {type: "full", data: [...fullArr]},
       {type: "incomplete", data: [...incompleteCounterArr]},
       {type: "goodsDoNotExist", data: [...goodsDoNotExist]}
     ]));
