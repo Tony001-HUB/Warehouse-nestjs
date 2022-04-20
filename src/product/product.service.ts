@@ -5,6 +5,7 @@ import { ProductDto } from './dto/product.dto';
 import { Product } from './model/product.model';
 import { IncompleteProduct } from "./model/incompleteProduct.model";
 import { FullProduct } from "./model/fullProduct.model";
+import { Observable } from "rxjs";
 
 @Injectable()
 export class ProductService {
@@ -55,7 +56,6 @@ export class ProductService {
   }
 
   public async addIncompleteProduct(incompleteProductDto: ProductDto[]) {
-    console.log("incompleteProductDto",incompleteProductDto);
     return await this.incompleteProductRepository.bulkCreate(incompleteProductDto);
   }
 

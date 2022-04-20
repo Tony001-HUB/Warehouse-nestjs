@@ -1,5 +1,7 @@
 import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { ProductService } from './product.service';
+import { zip } from "rxjs";
+import { ProductDto } from "./dto/product.dto";
 
 @Controller('product-report')
 export class ProductReportController {
@@ -25,54 +27,43 @@ export class ProductReportController {
     return this.productService.getIncompleteProductByTransactionId(transactionId);
   }
 
+  @Post("add/IncompleteFullInDB") addIncompleteFullInDB(@Body() data: {incomplete: ProductDto[], full: ProductDto[]}) {
+    this.productService.addIncompleteProduct([...data.incomplete]).then();
+    this.productService.addFullProduct([...data.full]).then();
+  }
+
   @Post()
   public generateReport(@Body() idArray: {count: number, title: string}[]) {
     let transactionId = this.productService.generateId(30);
     let fullArr = [];
     let incompleteCounterArr = [];
-    return this.productService.generateReport(idArray).then(res => {
-      for (let i = 0; i < idArray.length; i++) {
-        for (let x = 0; x < res.length; x++) {
-          if (idArray[i].title === res[x].title && idArray[i].count >= res[x].counter) {
-            res[x]['dataValues']['transactionId'] = transactionId;
-            res[x]['dataValues']['insufficiency'] = idArray[i].count - res[x].counter;
-            incompleteCounterArr.push(res[x]);
-          }
-          if (idArray[i].title === res[x].title && idArray[i].count < res[x].counter) {
-            res[x]['dataValues']['transactionId'] = transactionId;
-            res[x]['dataValues']['insufficiency'] = 0;
-            fullArr.push(res[x]);
+    let goodsDoNotExist = [];
+
+    return Promise.all([this.productService.generateReport(idArray), this.productService.getAllProducts()])
+      .then(values => {
+        const [promiseGenerateReport, promiseGetAllProducts] = values;
+        goodsDoNotExist = idArray.filter(({ title: titleF }) => !promiseGetAllProducts.some(({ title: titleS }) => titleF === titleS));
+
+
+        for (let i = 0; i < idArray.length; i++) {
+          for (let x = 0; x < promiseGenerateReport.length; x++) {
+            if (idArray[i].title === promiseGenerateReport[x].title && idArray[i].count >= promiseGenerateReport[x].counter) {
+              promiseGenerateReport[x]['dataValues']['transactionId'] = transactionId;
+              promiseGenerateReport[x]['dataValues']['insufficiency'] = idArray[i].count - promiseGenerateReport[x].counter;
+              incompleteCounterArr.push(promiseGenerateReport[x]);
+            }
+            if (idArray[i].title === promiseGenerateReport[x].title && idArray[i].count < promiseGenerateReport[x].counter) {
+              promiseGenerateReport[x]['dataValues']['transactionId'] = transactionId;
+              promiseGenerateReport[x]['dataValues']['insufficiency'] = 0;
+              fullArr.push(promiseGenerateReport[x]);
+            }
           }
         }
-      }
-    })
-      .then(res => {
-        setTimeout(() => {
-          console.log("_________________",incompleteCounterArr);
-          this.productService.addIncompleteProduct(
-            incompleteCounterArr.map(data => data.dataValues))
-            .then();
-          this.productService.addFullProduct(
-            [...fullArr.map(data => data.dataValues), ...incompleteCounterArr.map(data => data.dataValues)])
-            .then();
-
-          return true;
-        }, 0);
       })
-      .then(res => ([{type: "full", data: [...fullArr, ...incompleteCounterArr]}, {type: "incomplete", data: [...incompleteCounterArr]}]));
+      .then(res => ([
+      {type: "full", data: [...fullArr, ...incompleteCounterArr]},
+      {type: "incomplete", data: [...incompleteCounterArr]},
+      {type: "goodsDoNotExist", data: [...goodsDoNotExist]}
+    ]));
   }
 }
-/*
-response.map(product => {
- console.log(idArray.includes(product.productId.toString()));
- if(idArray.includes(product.productId.toString())) {
-   return {
-     product
-   }
- } else {
-   return {
-     id: product.productId,
-     info: 'not found'
-   }
- }
-*/
