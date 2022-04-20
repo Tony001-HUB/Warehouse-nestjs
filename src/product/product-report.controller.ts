@@ -27,8 +27,8 @@ export class ProductReportController {
     return this.productService.getIncompleteProductByTransactionId(transactionId);
   }
 
-  @Post("add/IncompleteFullInDB") addIncompleteFullInDB(@Body() data: {incomplete: ProductDto[], full: ProductDto[]}) {
-    this.productService.addIncompleteProduct([...data.incomplete]).then();
+  @Post("add/IncompleteFullInDB") addIncompleteFullInDB(@Body() data: {incomplete: ProductDto[], full: ProductDto[], goodsDoNotExist: ProductDto[]}) {
+    this.productService.addIncompleteProduct(data.incomplete, data.goodsDoNotExist).then();
     this.productService.addFullProduct([...data.full]).then();
   }
 

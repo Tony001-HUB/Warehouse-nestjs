@@ -55,8 +55,8 @@ export class ProductService {
     });
   }
 
-  public async addIncompleteProduct(incompleteProductDto: ProductDto[]) {
-    return await this.incompleteProductRepository.bulkCreate(incompleteProductDto);
+  public async addIncompleteProduct(incompleteProductDto: ProductDto[], goodsDoNotExist: ProductDto[]) {
+    return await this.incompleteProductRepository.bulkCreate([...incompleteProductDto, ...goodsDoNotExist]);
   }
 
   public async getIncompleteProduct() {

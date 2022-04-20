@@ -14,10 +14,10 @@ export class IncompleteProduct extends Model<IncompleteProduct, IProductCreation
   @Column({type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
   id: number;
 
-  @Column({type: DataType.STRING, allowNull: false})
+  @Column({type: DataType.STRING, allowNull: false,  unique: true})
   title: string;
 
-  @Column({type: DataType.INTEGER, unique: true, allowNull: false})
+  @Column({type: DataType.INTEGER})
   productId: number;
 
   @Column({type: DataType.INTEGER, allowNull: false})
